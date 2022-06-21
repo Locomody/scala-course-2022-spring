@@ -28,7 +28,7 @@ class GivensSuite extends munit.FunSuite:
   test("Int even") {
     assertEquals(
       JsonStringEncoder[Int]
-        .encode(117), "200"
+        .encode(200), "200"
     )
   }
 
