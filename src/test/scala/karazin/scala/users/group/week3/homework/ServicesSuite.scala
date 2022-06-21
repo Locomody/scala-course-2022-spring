@@ -21,39 +21,47 @@ class ServicesSuite extends munit.FunSuite:
   test("getUserProfile test") {
     val userProfile = getUserProfile()
     userProfile onComplete {
-      case Success(result) => assertEquals(42, 42)
-      case Failure(error)  => fail("getUserProfile failed")
+      case Success(UserProfile(_)) => assert(true)
+      case Failure(error) => fail("getUserProfile failed")
     }
   }
 
   test("getPosts test") {
-    val posts = getPosts(UUID.randomUUID())
-    posts onComplete {
-      case Success(result) => assertEquals(42, 42)
-      case Failure(error)  => fail("getPosts failed")
+    val userId = UUID.randomUUID()
+    val posts = getPosts(userId)
+    posts map {
+      posts =>
+        for (post <- posts)
+          assertEquals(post.userId, userId)
     }
   }
 
   test("getComments test") {
-    val comments = getComments(UUID.randomUUID())
-    comments onComplete {
-      case Success(result) => assertEquals(42, 42)
-      case Failure(error)  => fail("getComments failed")
+    val postId = UUID.randomUUID()
+    val comments = getComments(postId)
+    comments map {
+      comments =>
+        for (comment <- comments)
+          assertEquals(comment.postId, postId)
     }
   }
 
   test("getLikes test") {
-    val likes = getLikes(UUID.randomUUID())
-    likes onComplete {
-      case Success(result) => assertEquals(42, 42)
-      case Failure(error)  => fail("getLikes failed")
+    val postId = UUID.randomUUID()
+    val likes = getLikes(postId)
+    likes map {
+      likes =>
+        for (like <- likes)
+          assertEquals(like.postId, postId)
     }
   }
 
   test("getShares test") {
-    val shares = getShares(UUID.randomUUID())
-    shares onComplete {
-      case Success(result) => assertEquals(42, 42)
-      case Failure(error)  => fail("getShares failed")
+    val postId = UUID.randomUUID()
+    val shares = getShares(postId)
+    shares map {
+      shares =>
+        for (share <- shares)
+          assertEquals(share.postId, postId)
     }
   }
