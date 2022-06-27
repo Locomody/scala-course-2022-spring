@@ -20,9 +20,11 @@ class ServicesSuite extends munit.FunSuite:
 
   test("getUserProfile test") {
     val userProfile = getUserProfile()
-    userProfile onComplete {
-      case Success(UserProfile(_)) => assert(true)
-      case Failure(error) => fail("getUserProfile failed")
+    Future {
+      userProfile onComplete {
+        case Success(UserProfile(_)) => assert(true)
+        case Failure(error) => fail("getUserProfile failed")
+      }
     }
   }
 

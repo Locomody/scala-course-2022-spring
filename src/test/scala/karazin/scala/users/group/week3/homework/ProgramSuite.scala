@@ -22,8 +22,10 @@ class ProgramSuite extends munit.FunSuite:
     val userId_ = UUID.randomUUID()
     val postId_  = UUID.randomUUID()
     val postView = getPostView(Post(userId_, postId_))
-    postView onComplete {
-      case Success(PostView(Post(userId, postId), _, _, _)) => assertEquals(userId, userId_); assertEquals(postId, postId_);
-      case Failure(error)  => fail("getPostView failed")
+    Future {
+      postView onComplete {
+        case Success(PostView(Post(userId, postId), _, _, _)) => assertEquals(userId, userId_); assertEquals(postId, postId_);
+        case Failure(error) => fail("getPostView failed")
+      }
     }
   }
